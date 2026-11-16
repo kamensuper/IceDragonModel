@@ -1,0 +1,6 @@
+checkpoints/
+output/
+__pycache__/
+*.pyc
+_work/
+*.blend1
