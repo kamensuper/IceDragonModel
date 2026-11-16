@@ -11,8 +11,8 @@ ROOT = os.environ.get('ID_ROOT', os.path.dirname(os.path.dirname(os.path.abspath
 CKPT = os.path.join(ROOT, 'checkpoints')
 OUT = os.path.join(ROOT, 'output')
 
-LO = np.array((-108.0, -0.5, -102.0))        # grid bounds (voxel centres at lo + .5 + i)
-HI = np.array((108.0, 187.5, 110.0))
+LO = np.array((-120.0, -0.5, -104.0))        # grid bounds (voxel centres at lo + .5 + i)
+HI = np.array((120.0, 193.5, 118.0))
 
 
 def hx(h): return np.array([int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)])
@@ -46,13 +46,14 @@ PAL_RGB = np.array([C[k] for k in PAL])
 GROUND = 11.0                                # top of the ice-rock base under the feet
 
 # spine: tail tip -> tail -> hips -> barrel -> chest -> S-neck -> skull base.   (x, y, z, radius)
-TAIL = [(-63, 53, 60, 2.7), (-64, 40, 71, 3.3), (-58, 27, 84, 4.3), (-43, 18.5, 94, 5.5), (-24, 18, 97, 6.8),
-        (-8, 24, 89, 8.2), (-1, 36, 75, 9.8), (0, 49, 58, 11.8)]
+TAIL = [(-86, 61, 84, 2.8), (-84.5, 45, 90, 3.4), (-77, 31, 97, 4.4), (-61, 21.5, 102, 5.6), (-41, 18.5, 102, 6.9),
+        (-21, 22, 95, 8.3), (-6, 33, 80, 9.9), (0, 48, 60, 11.8)]
 TORSO = [(0, 59, 40, 14.5), (0, 63, 24, 16.2), (0, 66.5, 6, 17.0), (0, 71, -10, 17.2)]
-NECK = [(0, 79, -22, 14.5), (-1, 94, -27, 11.6), (-4, 110, -25.5, 10.0), (-8, 125, -27, 9.2), (-11.5, 137, -35, 8.8), (-13.5, 143, -46, 8.6), (-15, 145, -55, 8.6)]
+NECK = [(0, 80, -23, 16.2), (0, 92, -32.5, 13.8), (-2, 104, -34.5, 12.0), (-5, 116, -30.5, 11.0), (-9, 127, -28, 10.3), (-12, 135.5, -33, 9.9),
+        (-14, 140, -43, 9.6), (-15, 140.5, -53, 9.5)]
 
 # head frame: yaw toward -x (the 3/4 camera side), pitched down
-HEAD_YAW, HEAD_PITCH = 24.0, -13.0
+HEAD_YAW, HEAD_PITCH = 9.0, -13.0
 JAW_OPEN = 27.0
 
 # legs: (hip/shoulder, knee/elbow, hock/wrist, foot centre) + radii; feet point along `toe` (yaw in degrees, 0 = -z)
@@ -68,9 +69,9 @@ WING = dict(
     S=(10, 83, -9),            # shoulder root
     E=(35, 112, 7),            # elbow
     W=(60, 141, -13),          # wrist
-    FING=[[(60, 141, -13), (80, 155, -10), (98, 163, -2)],            # leading spar
-          [(60, 141, -13), (84, 132, 0), (104, 117, 19)],
-          [(60, 141, -13), (76, 112, 12), (88, 79, 39)],
-          [(60, 141, -13), (63, 100, 20), (60, 57, 50)]],
+    FING=[[(60, 141, -13), (82, 158, -10), (104, 170, -1)],            # leading spar
+          [(60, 141, -13), (88, 134, 1), (113, 118, 22)],
+          [(60, 141, -13), (79, 110, 14), (95, 73, 44)],
+          [(60, 141, -13), (64, 97, 22), (62, 52, 55)]],
     H=(13, 63, 43),            # trailing membrane meets the flank at the hip
 )

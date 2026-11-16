@@ -227,7 +227,7 @@ class Frame:
 LIGHT = np.array((-.45, .78, -.44)); LIGHT = LIGHT / np.linalg.norm(LIGHT)      # key light direction baked into the facet tones
 
 
-def crystal(v, p0, d, H, R, tip=.42, roll=0.0, flat=1.0, base=2.0, tones=None, pid=None, lvl=8, only_empty=False, sides=6):
+def crystal(v, p0, d, H, R, tip=.42, roll=0.0, flat=1.0, base=2.0, tones=None, pid=None, lvl=8, only_empty=False, sides=6, wide=None):
     """faceted ice crystal: hexagonal prism from p0 along d (length H, radius R) ending in a pyramid over the last `tip` fraction.
     `flat` < 1 squashes one cross axis (blade). Facets are coloured by how much they face the key light = cut-gem look in bricks.
     Returns the full-grid mask of the crystal."""
@@ -235,6 +235,8 @@ def crystal(v, p0, d, H, R, tip=.42, roll=0.0, flat=1.0, base=2.0, tones=None, p
     tones = tones or (C['ICEDD'], C['ICED'], C['ICE'], C['FROST'])
     p0 = np.array(p0, float); d = np.array(d, float); d /= np.linalg.norm(d)
     e1 = np.cross(d, (0, 1, 0) if abs(d[1]) < .9 else (1, 0, 0)); e1 /= np.linalg.norm(e1); e2 = np.cross(d, e1)
+    if wide is not None:                                                             # blade: wide axis given, thin axis = d x wide
+        e1 = np.array(wide, float); e1 -= d * e1.dot(d); e1 /= np.linalg.norm(e1); e2 = np.cross(d, e1)
     e1, e2 = e1 * np.cos(roll) + e2 * np.sin(roll), e2 * np.cos(roll) - e1 * np.sin(roll)
     sl = v.sub(p0 - R - base - 2, p0 + d * H, pad=R + 2)
     X, Y, Z = v.X[sl], v.Y[sl], v.Z[sl]
